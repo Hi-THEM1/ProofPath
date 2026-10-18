@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, use } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -33,8 +34,9 @@ import {
 } from '@/lib/utils';
 import type { ApplicationStatus } from '@/demo/types';
 
-export default function EmployerApplicationReviewPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function EmployerApplicationReviewPage() {
+  const routeParams = useParams();
+  const id = typeof routeParams?.id === 'string' ? routeParams.id : Array.isArray(routeParams?.id) ? routeParams.id[0] : '';
   const { state, dispatch, isHydrated, showToast } = useStore();
 
   const [notes, setNotes] = useState('');

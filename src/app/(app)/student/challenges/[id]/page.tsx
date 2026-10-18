@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, use, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import {
   ArrowLeft,
   Clock,
@@ -25,8 +26,9 @@ import { simulatedBudgetEvidence } from '@/demo/scenarios';
 import { formatDate, cn } from '@/lib/utils';
 import type { ChallengeSubmission, ChallengeReviewResult, EvidenceRecord } from '@/demo/types';
 
-export default function ChallengeWorkspacePage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function ChallengeWorkspacePage() {
+  const routeParams = useParams();
+  const id = typeof routeParams?.id === 'string' ? routeParams.id : Array.isArray(routeParams?.id) ? routeParams.id[0] : '';
   const { state, dispatch, isHydrated, showToast } = useStore();
 
   const challenge = state.challenges.find((c) => c.id === id);

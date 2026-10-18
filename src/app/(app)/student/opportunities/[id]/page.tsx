@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, use, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import {
   ArrowLeft,
   ArrowRight,
@@ -40,8 +40,9 @@ import {
 } from '@/lib/utils';
 import type { ApplicationEvidenceSnapshot } from '@/demo/types';
 
-export default function OpportunityDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+export default function OpportunityDetailPage() {
+  const routeParams = useParams();
+  const id = typeof routeParams?.id === 'string' ? routeParams.id : Array.isArray(routeParams?.id) ? routeParams.id[0] : '';
   const { state, dispatch, isHydrated, showToast } = useStore();
   const router = useRouter();
   const student = useCurrentStudent();
